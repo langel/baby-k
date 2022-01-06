@@ -22,19 +22,20 @@ int main(int argc, char* args[]) {
 	
 	int running = 1;
 	while (running) {
-		sprintf(counter_string, "%016u", counter_value);
-		counter_value += 1234567;
-		x_pos_counter += 0.03;
-		counter_rect.x = (int) (sin(x_pos_counter) * 100.0) + (window_w - 16*32) / 2;
-		
+
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 		SDL_DestroyTexture(counter_texture);
 
+		counter_value += 1234567;
+		sprintf(counter_string, "%016u", counter_value);
 		counter_texture = char_rom_get_texture_from_string(renderer, petscii, counter_string);
-		SDL_RenderCopy(renderer, counter_texture, NULL, &counter_rect);
-		SDL_RenderPresent(renderer);
 
+		x_pos_counter += 0.03;
+		counter_rect.x = (int) (sin(x_pos_counter) * 100.0) + (window_w - 16*32) / 2;
+		SDL_RenderCopy(renderer, counter_texture, NULL, &counter_rect);
+
+		SDL_RenderPresent(renderer);
 
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT || 
