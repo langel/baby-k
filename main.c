@@ -16,9 +16,9 @@ int main(int argc, char* args[]) {
 	char_rom petscii = char_rom_create_texture(renderer, "petscii_8032.bin");
 	SDL_Texture * counter_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 64, 8);
 	SDL_Rect counter_rect = { 0, (window_h / 2) - 16, 16*32, 32 };
-	int counter_value = 0;
+	unsigned long long counter_value = 0;
 	double x_pos_counter = 0.0;
-	char counter_string[16];
+	char counter_string[17];
 	
 	int running = 1;
 	while (running) {
@@ -27,8 +27,8 @@ int main(int argc, char* args[]) {
 		SDL_RenderClear(renderer);
 		SDL_DestroyTexture(counter_texture);
 
-		counter_value += 1234567;
-		sprintf(counter_string, "%016u", counter_value);
+		counter_value += 123456789;
+		sprintf(counter_string, "%016llu", counter_value);
 		counter_texture = char_rom_get_texture_from_string(renderer, petscii, counter_string);
 
 		x_pos_counter += 0.03;
