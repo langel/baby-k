@@ -12,6 +12,8 @@ int main(int argc, char* args[]) {
 	SDL_Event event;
 	SDL_Window * window = SDL_CreateWindow("baby-k", 200, 200, window_w, window_h, SDL_WINDOW_RESIZABLE);
 	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+	
+	audio_init(32000, 2, 1024, AUDIO_F32SYS);
 
 	// char rom initialization
 	char_rom_load_set(renderer, petscii_8032_bin);
@@ -64,7 +66,7 @@ int main(int argc, char* args[]) {
 		SDL_RenderClear(renderer);
 
 		for (int i = 0; i < 64; i++) {
-			char_rom_set_color(&colors[rand() % 16]);
+			char_rom_set_color(&colors[rand() % 8]);
 			char_rom_plot_char(renderer, screen_texture, rand() % 256, rand() % char_width, rand() % char_height);
 		}
 		SDL_RenderCopy(renderer, screen_texture, NULL, NULL);
