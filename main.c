@@ -86,6 +86,18 @@ int main(int argc, char* args[]) {
 			(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)) {
 				running = 0;
 			}
+			if (event.type == SDL_DROPFILE) {
+				// handle drop file
+				char * dropped_filedir = event.drop.file;
+				// Shows directory of dropped file
+				SDL_ShowSimpleMessageBox(
+					SDL_MESSAGEBOX_INFORMATION,
+					"File dropped on window",
+					dropped_filedir,
+					window
+				);
+				SDL_free(dropped_filedir);    // Free dropped_filedir memory
+			}
 		}
 	}
 	

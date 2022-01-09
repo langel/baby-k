@@ -1,3 +1,25 @@
+/*
+
+			  X is the number from 0 to 127 that is put into the frequency
+			register. If X is 127, then use -1 for X in the formula. The value of
+			Clock comes from the following table:
+			 +----------+-----------------+-----------------+
+			 | Register |  NTSC (US TV's) |  PAL (European) |
+			 +----------+-----------------+-----------------+
+			 |  36874   |       3995      |       4329      |
+			 |  36875   |       7990      |       8659      |
+			 |  36876   |      15980      |      17320      |
+			 |  36877   |      31960      |      34640      |
+			 +----------+-----------------+-----------------+
+
+			 N: bass enable,    R: freq f=Phi2/256/(128-(($900a+1)&127))
+			 O: alto enable,    S: freq f=Phi2/128/(128-(($900b+1)&127))
+			 P: soprano enable, T: freq f=Phi2/64/(128-(($900c+1)&127))
+			 Q: noise enable,   U: freq f=Phi2/32/(128-(($900d+1)&127))
+			 * PAL:  Phi2=4433618/4 Hz
+			 * NTSC: Phi2=14318181/14 Hz
+
+*/
 void audio_spec_log(SDL_AudioSpec *as) {
 	printf(
 		" freq______%5d\n"
@@ -25,7 +47,7 @@ void audio_callback(void* userdata, uint8_t* byte_stream, int byte_stream_length
 	int float_stream_length = byte_stream_length >> 2;
 	for (int i = 0; i < float_stream_length; i += 2) {
 		float output = 0.f;
-		output = (audio_time_counter % 1000 > 500) ? 0.1f : -0.1f;
+		output = (audio_time_counter % 1000 > 500) ? 0.01f : -0.01f;
 		float_stream[i] = output;
 		float_stream[i+1] = output;
 		audio_time_counter++;
