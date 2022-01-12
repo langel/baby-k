@@ -34,6 +34,8 @@ typedef struct {
 	float phase_rate;
 	float phase_pos;
 } audio_channel_struct;
+/*
 audio_channel_struct audio_channels[4] = {
-	audio_base_clock_ntsc / 256.f
+	audio_base_clock_ntsc / 256.f;
 }
+*/
